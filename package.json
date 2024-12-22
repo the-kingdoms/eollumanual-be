@@ -1,0 +1,27 @@
+{
+  "name": "eollumanual-be",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "docker-build": "docker build -t eollumanual-be .",
+    "build": "tsc --outDir dist",
+    "start": "npm run build && node dist/server.js",
+    "test": "echo 'test'",
+    "dev": "npm run build && concurrently \"tsc --outDir dist --watch\" \"nodemon -q dist/server.js\""
+  },
+  "author": "developerryou",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-validator": "^7.1.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.12.12",
+    "nodemon": "^3.1.0",
+    "typescript": "^5.4.5"
+  }
+}
