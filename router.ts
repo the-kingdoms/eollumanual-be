@@ -3,7 +3,11 @@ import { Browser, type Frame, type Page, launch } from "puppeteer";
 
 const router = Router();
 
-router.get("/crawl-naver-map", async (req: Request, res: Response) => {
+router.get("/health", (req, res) => {
+  res.status(200).json({ message: "OK" });
+});
+
+router.get("/api/crawl-naver-map", async (req: Request, res: Response) => {
   const { uri } = req.query;
   if (!uri) {
     res.status(400).json({ message: "uri is required" });
