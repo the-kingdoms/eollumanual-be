@@ -6,8 +6,7 @@
     "docker-build": "docker build -t eollumanual-be .",
     "build": "tsc --outDir dist",
     "start": "npm run build && node dist/server.js",
-    "test": "echo 'test'",
-    "dev": "npm run build && concurrently \"tsc --outDir dist --watch\" \"nodemon -q dist/server.js\""
+    "test": "echo 'test'"
   },
   "author": "developerryou",
   "license": "ISC",
@@ -15,7 +14,8 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "express-validator": "^7.1.0"
+    "express-validator": "^7.1.0",
+    "puppeteer": "^23.11.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
