@@ -10,4 +10,8 @@ app.use(express.json());
 
 app.use("/api", router);
 
+app.get("/health", (req, res) => {
+  res.status(200).json({ message: "OK" });
+});
+
 app.listen(port, () => console.log(`Server listening on port ${port}`));
