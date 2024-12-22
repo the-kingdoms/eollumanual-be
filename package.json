@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "docker-build": "docker build -t eollumanual-be .",
+    "docker-build": "docker build -t eollumanual .",
     "build": "tsc --outDir dist",
     "start": "npm run build && node dist/server.js",
     "test": "echo 'test'"
