@@ -17,22 +17,31 @@ router.get("/api/crawl-naver-map", async (req: Request, res: Response) => {
   try {
     browser = await launch({
       headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-gpu",
+      ],
     });
+    console.log("[EOLLUMANUAL-BE] Browser launched");
 
     const page = await browser.newPage();
     await page.setUserAgent(
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36"
     );
     await page.goto(uri as string, { waitUntil: "networkidle0" });
+    console.log("[EOLLUMANUAL-BE] Page loaded");
 
     // get frame
     const frame = await page.waitForFrame(async (frame) => {
       return frame.name() === "entryIframe";
     });
+    console.log("[EOLLUMANUAL-BE] Frame loaded");
 
     // scroll some times to load all content
     await autoScroll(frame);
+    console.log("[EOLLUMANUAL-BE] Scrolling done");
 
     const titleElem = await frame.waitForSelector(".GHAhO");
     const title = await titleElem?.evaluate((el) => el.textContent);
@@ -41,7 +50,6 @@ router.get("/api/crawl-naver-map", async (req: Request, res: Response) => {
       (el) => el.textContent
     );
     const storeInfoElem = await frame.waitForSelector(".PIbes");
-    // store Info is List of string
     const storeInfo = await storeInfoElem?.evaluate((el) => {
       return Array.from(el.children).map((child) => child.textContent);
     });
@@ -50,12 +58,13 @@ router.get("/api/crawl-naver-map", async (req: Request, res: Response) => {
       classification,
       storeInfo,
     };
+    console.log("[EOLLUMANUAL-BE] Crawling done", ret);
 
     await page.close();
     await browser.close();
     res.status(200).json(ret);
   } catch (error: any) {
-    console.error("Error crawling", uri, error);
+    console.error("[EOLLUMANUAL-BE] Error crawling", uri, error);
     if (browser) await browser.close();
     res.status(400).json({ message: "Error crawling", error: error.message });
   }

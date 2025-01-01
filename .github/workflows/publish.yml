@@ -28,9 +28,6 @@ jobs:
           node-version: 20
           cache: "yarn"
 
-      - name: Install dependencies
-        run: yarn install
-
       # Docker 이미지 Build
       - name: Docker image build
         run: yarn docker-build
